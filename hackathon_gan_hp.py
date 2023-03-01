@@ -96,6 +96,7 @@ class Discriminator(nn.Module):
             get_discriminator_block(hidden_dim * 4, hidden_dim * 2),
             get_discriminator_block(hidden_dim * 2, hidden_dim),
             nn.Linear(hidden_dim, 1)
+            nn.Sigmoid()
         )
 
     def forward(self, image):
@@ -274,7 +275,7 @@ def objective(trial):
     return crps_mean
 
 # %%
-study = optuna.create_study(direction='maximize')
+study = optuna.create_study()
 study.optimize(objective, n_trials=3)
 
 # %% [markdown]
