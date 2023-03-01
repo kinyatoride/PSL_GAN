@@ -29,6 +29,7 @@ dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True) # create y
 def get_generator_block(input_dim, output_dim):
     return nn.Sequential(
         nn.Linear(input_dim, output_dim),
+        nn.Dropout(p=0.25),
         nn.BatchNorm1d(output_dim),
         nn.ReLU(inplace=True),
     )
@@ -95,7 +96,7 @@ class Discriminator(nn.Module):
             get_discriminator_block(im_dim, hidden_dim * 4),
             get_discriminator_block(hidden_dim * 4, hidden_dim * 2),
             get_discriminator_block(hidden_dim * 2, hidden_dim),
-            nn.Linear(hidden_dim, 1)
+            nn.Linear(hidden_dim, 1),
             nn.Sigmoid()
         )
 
